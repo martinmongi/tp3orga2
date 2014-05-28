@@ -5,6 +5,8 @@
 
 %include "imprimir.mac"
 
+extern GDT_DESC
+
 global start
 
 
@@ -42,14 +44,25 @@ start:
     
 
     ; Habilitar A20
+    CALL habilitar_A20
     
     ; Cargar la GDT
+        
+    LGDT [GDT_DESC]
     
     ; Setear el bit PE del registro CR0
     
+    MOV EAX, CR0
+    OR EAX, 1
+    MOV CR0, EAX
+    
     ; Saltar a modo protegido
     
+    JMP (9*0X08):modoprotegido
+    modoprotegido
+
     ; Establecer selectores de segmentos
+    
     
     ; Establecer la base de la pila
     
