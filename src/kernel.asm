@@ -57,14 +57,23 @@ start:
     MOV CR0, EAX
     
     ; Saltar a modo protegido
-    
+    xchg bx, bx    
     JMP (9*0X08):modoprotegido
-    modoprotegido
+    modoprotegido:
 
     ; Establecer selectores de segmentos
-    
+    mov ax, (11*0x8)
+    mov ds, ax
+    mov ax, 0x0
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
     
     ; Establecer la base de la pila
+    
+    mov ax, (11*0x8)
+    mov ss, ax
+    mov esp, 0x27000
     
     ; Imprimir mensaje de bienvenida
     
